@@ -1,0 +1,105 @@
+##############################
+# 🔹 Visual Studio / .NET Ignore Rules
+##############################
+
+# User-specific files
+.vs/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Build results
+[Bb]in/
+[Oo]bj/
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+[Aa][Rr][Mm]/
+[Aa][Rr][Mm]64/
+
+# Publish results
+*.pubxml
+*.publish.xml
+*.azurePubxml
+*.publishsettings
+
+# Build logs and caches
+*.log
+*.cache
+*.pdb
+*.dll
+*.exe
+*.dbmdl
+*.bak
+*.ldf
+*.mdf
+
+# Test results
+[Tt]est[Rr]esult*/
+[Bb]uild[Ll]og.*
+*.trx
+*.coverage
+*.coveragexml
+
+# IDE files
+.idea/
+*.iml
+_ReSharper*/
+*.DotSettings.user
+
+# VS Code
+.vscode/
+.history/
+
+# NuGet Packages
+*.nupkg
+*.snupkg
+# Uncomment the next line if you don't want to store packages folder
+# packages/
+
+# Entity Framework Migrations snapshot
+*_efmigrationshistory/
+Migrations/
+
+# Rider / JetBrains
+.idea/
+*.sln.iml
+
+# ASP.NET Scaffolding
+ScaffoldingReadMe.txt
+
+# Backup & temporary files
+*.tmp
+*.temp
+*.bak
+*.swp
+
+# Others
+*.vspscc
+*.vssscc
+*.ncb
+*.sdf
+*.opendb
+*.DS_Store
+Thumbs.db
+
+##############################
+# 🔹 Optional project-specific ignores
+##############################
+
+# Logs
+logs/
+*.log
+
+# Publish folders
+publish/
+out/
+artifacts/
+wwwroot/
+node_modules/
+
+# Secrets / keys
+secrets.json
+appsettings.*.json

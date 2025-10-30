@@ -1,11 +1,19 @@
 @App.MinimalApi_HostAddress = http://localhost:5160
 
-GET {{App.MinimalApi_HostAddress}}/todos/
+POST {{App.MinimalApi_HostAddress}}/api/reservation
+Content-Type: application/json
 Accept: application/json
 
-###
+{
+  "train": {
+    "name": "Baþkent Ekspres",
+    "wagons": [
+      { "id": 1, "name": "Vagon 1", "capacity": 100, "occupiedSeats": 68 },
+      { "id": 2, "name": "Vagon 2", "capacity": 90, "occupiedSeats": 50 },
+      { "id": 3, "name": "Vagon 3", "capacity": 80, "occupiedSeats": 80 }
+    ]
+  },
+  "numberOfPersonsToReserve": 3,
+  "canPeopleCanBePlacedInDifferentWagons": true
+}
 
-GET {{App.MinimalApi_HostAddress}}/todos/1
-Accept: application/json
-
-###

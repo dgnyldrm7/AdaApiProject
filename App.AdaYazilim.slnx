@@ -1,5 +1,5 @@
 <Solution>
   <Project Path="App.Core/App.Core.csproj" />
   <Project Path="App.MinimalApi/App.MinimalApi.csproj" />
-  <Project Path="App.Persistance/App.Persistance.csproj" />
+  <Project Path="App.Services/App.Services.csproj" Id="3334c16e-c66c-41fb-bc81-2e84d1540f97" />
 </Solution>
