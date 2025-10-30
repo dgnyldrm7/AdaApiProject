@@ -81,6 +81,10 @@ app.MapPost("/api/reservation", async (
 .Produces<ErrorResponseDto>(StatusCodes.Status422UnprocessableEntity)
 .Produces<ErrorResponseDto>(StatusCodes.Status500InternalServerError);
 
+app.MapGet("/", () => "Welcome to the Train Reservation API!");
+
+app.MapGet("/api/reservation", () => "This API only allows POST request.");
+
 // ------------------- Run Application -------------------
 app.Run();
 
