@@ -29,7 +29,7 @@ namespace App.MinimalApi.Middlewares
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Unhandled exception occurred.");
+                _logger.LogError(ex, "Beklenmeyen bir hata oluştu.");
 
                 context.Response.ContentType = "application/json";
                 context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
@@ -37,12 +37,16 @@ namespace App.MinimalApi.Middlewares
                 var errorResponse = new ErrorResponseDto
                 {
                     Status = 500,
-                    Title = "Internal Server Error",
-                    Detail = "An unexpected error occurred while processing your request.",
+                    Title = "Sunucu Hatası",
+                    Detail = "İstek işlenirken beklenmeyen bir hata oluştu.",
                     ErrorMessage = ex.Message
                 };
 
-                var json = JsonSerializer.Serialize(errorResponse, _jsonOptions);
+                var json = JsonSerializer.Serialize(
+                    errorResponse,
+                    AppJsonSerializerContext.Default.ErrorResponseDto
+                );
+
                 await context.Response.WriteAsync(json);
             }
         }

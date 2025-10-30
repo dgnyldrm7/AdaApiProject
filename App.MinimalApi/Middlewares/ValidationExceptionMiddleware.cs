@@ -25,15 +25,19 @@ namespace App.MinimalApi.Middlewares
                 context.Response.StatusCode = (int)HttpStatusCode.BadRequest;
                 context.Response.ContentType = "application/json";
 
-                var error = new ErrorResponseDto
+                var errorResponse = new ErrorResponseDto
                 {
                     Status = 400,
-                    Title = "Validation Error",
-                    Detail = "One or more validation errors occurred.",
+                    Title = "Doğrulama Hatası",
+                    Detail = "Bir veya daha fazla doğrulama hatası oluştu.",
                     ErrorMessage = string.Join(" | ", ex.Errors.Select(e => e.ErrorMessage))
                 };
 
-                var json = JsonSerializer.Serialize(error);
+                var json = JsonSerializer.Serialize(
+                    errorResponse,
+                    AppJsonSerializerContext.Default.ErrorResponseDto
+                );
+
                 await context.Response.WriteAsync(json);
             }
         }

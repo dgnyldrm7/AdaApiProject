@@ -9,31 +9,42 @@ namespace App.Services.Service
         {
             var result = new ReservationResponse();
 
-            //1. Uygun vagonları bul (%70 kuralı)
+            //Uygun vagonları bul (%70 kuralı)
             var availableWagons = request.Train.Wagons
                 .Where(w => w.OccupiedSeats < w.Capacity * 0.7)
                 .ToList();
 
+            // Eğer hiçbir vagon %70 doluluk kuralına göre uygun değilse
             if (!availableWagons.Any())
-                return Result<ReservationResponse>.Fail(
-                    422,
-                    "Reservation Not Possible",
-                    "No available wagons under 70% occupancy rule."
-                );
+            {
+                result.IsReservationSuccessful = false;
+                result.LocalDetail = new List<LocalDetail>();
 
-            //2. Tek vagonda mı olacak?
+                return Result<ReservationResponse>.Success(
+                    result,
+                    "Hiçbir vagon %70 doluluk kuralına göre uygun değil."
+                );
+            }
+
+            // Tek vagonda mı yapılacak?
             if (!request.CanPeopleCanBePlacedInDifferentWagons)
             {
                 var wagon = availableWagons.FirstOrDefault(w =>
                     (w.Capacity * 0.7) - w.OccupiedSeats >= request.NumberOfPersonsToReserve);
 
+                // Tüm yolcular tek vagonda sığmıyorsa
                 if (wagon is null)
-                    return Result<ReservationResponse>.Fail(
-                        422,
-                        "Reservation Not Possible",
-                        "Cannot fit all passengers in the same wagon under 70% rule."
-                    );
+                {
+                    result.IsReservationSuccessful = false;
+                    result.LocalDetail = new List<LocalDetail>();
 
+                    return Result<ReservationResponse>.Success(
+                        result,
+                        "Tüm yolcular aynı vagonda %70 doluluk kuralına göre yerleştirilemez."
+                    );
+                }
+
+                // Tek vagonda başarıyla yerleştirildiyse
                 result.IsReservationSuccessful = true;
                 result.LocalDetail.Add(new LocalDetail
                 {
@@ -41,18 +52,20 @@ namespace App.Services.Service
                     NumberOfReservedSeats = request.NumberOfPersonsToReserve
                 });
 
-                return Result<ReservationResponse>.Success(result, "Reservation successfully created.");
+                return Result<ReservationResponse>.Success(result, "Rezervasyon başarıyla oluşturuldu.");
             }
 
-            //3. Dağıtılabilir rezervasyon (multi-wagon)
+            //Birden fazla vagona dağıtılabilir rezervasyon
             int remainingPassengers = request.NumberOfPersonsToReserve;
 
             foreach (var wagon in availableWagons)
             {
                 int availableSeats = (int)(wagon.Capacity * 0.7) - wagon.OccupiedSeats;
-                if (availableSeats <= 0) continue;
+                if (availableSeats <= 0)
+                    continue;
 
                 int assignedSeats = Math.Min(availableSeats, remainingPassengers);
+
                 result.LocalDetail.Add(new LocalDetail
                 {
                     WagonName = wagon.Name,
@@ -60,20 +73,26 @@ namespace App.Services.Service
                 });
 
                 remainingPassengers -= assignedSeats;
-                if (remainingPassengers == 0) break;
+
+                if (remainingPassengers == 0)
+                    break;
             }
 
             result.IsReservationSuccessful = remainingPassengers == 0;
 
+            //Eğer yerleştirilemediyse ama hata değil, business rule
             if (!result.IsReservationSuccessful)
-                return Result<ReservationResponse>.Fail(
-                    422,
-                    "Reservation Not Possible",
-                    "Not enough available seats under 70% rule."
-                );
+            {
+                result.LocalDetail = new List<LocalDetail>();
 
-            return Result<ReservationResponse>
-                .Success(result, "Reservation successfully distributed across wagons.");
+                return Result<ReservationResponse>.Success(
+                    result,
+                    "Toplam uygun koltuk sayısı %70 doluluk kuralına göre yetersiz."
+                );
+            }
+
+            //Başarılı rezervasyon
+            return Result<ReservationResponse>.Success(result, "Rezervasyon uygun vagonlara başarıyla dağıtıldı.");
         }
     }
 }

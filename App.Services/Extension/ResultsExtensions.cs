@@ -14,9 +14,9 @@ namespace App.Services.Extension
                 return Results.Json(new ErrorResponseDto
                 {
                     Status = (int)HttpStatusCode.InternalServerError,
-                    Title = "Unexpected Error",
-                    Detail = "Result object was null.",
-                    ErrorMessage = "Result object could not be processed."
+                    Title = "Beklenmeyen Hata",
+                    Detail = "Sonuç nesnesi null olarak döndü.",
+                    ErrorMessage = "Sonuç nesnesi işlenemedi."
                 }, statusCode: StatusCodes.Status500InternalServerError);
             }
 
@@ -27,7 +27,7 @@ namespace App.Services.Extension
             {
                 Status = result.StatusCode,
                 Title = result.Title ?? GetTitleByStatusCode(result.StatusCode),
-                Detail = result.Message ?? "An error occurred while processing your request.",
+                Detail = result.Message ?? "İstek işlenirken bir hata oluştu.",
                 ErrorMessage = result.Message
             };
 
@@ -38,13 +38,13 @@ namespace App.Services.Extension
         {
             return statusCode switch
             {
-                StatusCodes.Status400BadRequest => "Bad Request",
-                StatusCodes.Status401Unauthorized => "Unauthorized",
-                StatusCodes.Status403Forbidden => "Forbidden",
-                StatusCodes.Status404NotFound => "Not Found",
-                StatusCodes.Status422UnprocessableEntity => "Unprocessable Content",
-                StatusCodes.Status500InternalServerError => "Internal Server Error",
-                _ => "Error"
+                StatusCodes.Status400BadRequest => "Geçersiz İstek",
+                StatusCodes.Status401Unauthorized => "Yetkisiz Erişim",
+                StatusCodes.Status403Forbidden => "Erişim Yasak",
+                StatusCodes.Status404NotFound => "Bulunamadı",
+                StatusCodes.Status422UnprocessableEntity => "İşlenemeyen İçerik",
+                StatusCodes.Status500InternalServerError => "Sunucu Hatası",
+                _ => "Hata"
             };
         }
     }

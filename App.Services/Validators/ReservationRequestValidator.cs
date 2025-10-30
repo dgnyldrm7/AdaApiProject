@@ -8,18 +8,21 @@ namespace App.Services.Validators
         public ReservationRequestValidator()
         {
             RuleFor(x => x.Train)
-                 .NotNull().WithMessage("Train cannot be null.");
+                .NotNull().WithMessage("Tren bilgisi boş olamaz.");
 
             RuleFor(x => x.Train.Wagons)
-                .NotEmpty().WithMessage("Train must have at least one wagon.");
+                .NotEmpty().WithMessage("Tren en az bir vagona sahip olmalıdır.");
 
             RuleFor(x => x.NumberOfPersonsToReserve)
-                .GreaterThan(0).WithMessage("Number of passengers must be greater than zero.");
+                .GreaterThan(0).WithMessage("Rezervasyon yapılacak kişi sayısı sıfırdan büyük olmalıdır.");
 
             RuleForEach(x => x.Train.Wagons).ChildRules(w =>
             {
-                w.RuleFor(x => x.Capacity).GreaterThan(0).WithMessage("Wagon capacity must be greater than zero.");
-                w.RuleFor(x => x.OccupiedSeats).GreaterThanOrEqualTo(0).WithMessage("Occupied seats cannot be negative.");
+                w.RuleFor(x => x.Capacity)
+                    .GreaterThan(0).WithMessage("Vagon kapasitesi sıfırdan büyük olmalıdır.");
+
+                w.RuleFor(x => x.OccupiedSeats)
+                    .GreaterThanOrEqualTo(0).WithMessage("Dolu koltuk sayısı negatif olamaz.");
             });
         }
     }

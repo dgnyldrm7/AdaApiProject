@@ -5,15 +5,16 @@ Content-Type: application/json
 Accept: application/json
 
 {
-  "train": {
-    "name": "Baþkent Ekspres",
-    "wagons": [
-      { "id": 1, "name": "Vagon 1", "capacity": 100, "occupiedSeats": 68 },
-      { "id": 2, "name": "Vagon 2", "capacity": 90, "occupiedSeats": 50 },
-      { "id": 3, "name": "Vagon 3", "capacity": 80, "occupiedSeats": 80 }
+  "Tren": {
+    "Ad": "string",
+    "Vagonlar": [
+      {
+        "Ad": "Test",
+        "Kapasite": 100,
+        "DoluKoltukAdet": 20
+      }
     ]
   },
-  "numberOfPersonsToReserve": 3,
-  "canPeopleCanBePlacedInDifferentWagons": true
+  "RezervasyonYapilacakKisiSayisi": 10,
+  "KisilerFarkliVagonlaraYerlestirilebilir": true
 }
-
