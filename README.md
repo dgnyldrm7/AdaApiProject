@@ -25,3 +25,8 @@ Servis, **REST tabanlı** olarak istek alır ve **JSON formatında** yanıt dön
 
 ## 🏗️ Project Structure
 <img width="282" height="377" alt="image" src="https://github.com/user-attachments/assets/eb43baab-91f7-4f50-90f7-d48915fc400c" />
+
+---
+
+## Örnek Postman üzerinden istek senaryosu
+<img width="1401" height="802" alt="image" src="https://github.com/user-attachments/assets/39efe499-4f92-43a0-a045-c3d3d54c206b" />
