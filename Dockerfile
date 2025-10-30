@@ -6,16 +6,14 @@ COPY ["App.MinimalApi/App.MinimalApi.csproj", "App.MinimalApi/"]
 COPY ["App.Core/App.Core.csproj", "App.Core/"]
 COPY ["App.Services/App.Services.csproj", "App.Services/"]
 
-# Restore
 RUN dotnet restore "App.MinimalApi/App.MinimalApi.csproj"
 
 COPY . .
 
-# Build ve publish
 WORKDIR /source/App.MinimalApi
-RUN dotnet publish -c Release -o /app/publish
+RUN dotnet publish -c Release -o /app/publish /p:PublishReadyToRun=false /p:PublishAot=false
 
-# Run
+#Run
 FROM mcr.microsoft.com/dotnet/aspnet:9.0
 WORKDIR /app
 COPY --from=build /app/publish .
