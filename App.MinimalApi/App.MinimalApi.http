@@ -1,0 +1,11 @@
+@App.MinimalApi_HostAddress = http://localhost:5160
+
+GET {{App.MinimalApi_HostAddress}}/todos/
+Accept: application/json
+
+###
+
+GET {{App.MinimalApi_HostAddress}}/todos/1
+Accept: application/json
+
+###

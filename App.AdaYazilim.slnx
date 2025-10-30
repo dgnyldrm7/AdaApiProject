@@ -1,0 +1,5 @@
+<Solution>
+  <Project Path="App.Core/App.Core.csproj" />
+  <Project Path="App.MinimalApi/App.MinimalApi.csproj" />
+  <Project Path="App.Persistance/App.Persistance.csproj" />
+</Solution>
