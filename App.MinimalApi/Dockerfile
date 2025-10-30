@@ -2,8 +2,8 @@
 FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 WORKDIR /source
 COPY . .
-RUN dotnet restore "App.MinimalApi/App.MinimalApi.csproj"
-RUN dotnet publish "App.MinimalApi/App.MinimalApi.csproj" -c Release -o /app/publish
+RUN dotnet restore "App.MinimalApi.csproj"
+RUN dotnet publish "App.MinimalApi.csproj" -c Release -o /app/publish
 
 # 2. Run aþamasý
 FROM mcr.microsoft.com/dotnet/aspnet:9.0
